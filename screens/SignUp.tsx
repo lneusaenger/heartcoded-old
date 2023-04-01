@@ -1,34 +1,50 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-
-const handleSubmit = () => {
-    console.log("will submit");
-}
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"; // ensure keyboard doesn't cover input fields
+import axios from 'axios';
 
 const SignUp = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+
+    const handleSubmit = () => {
+        console.log("Name: " + name);
+        if (name === '' || email === '' || password === '') {
+            alert('Please fill in all fields')
+        } 
+
+        // await axios.post('https://localhost:8001/api/signup', {
+        //     name: name,
+        //     email: email,
+        //     password: password
+        // })
+        console.log("Success");
+        alert('Success');
+    }
     
     return (
-        <View style = {styles.container}>
-            <Text style = {styles.signupText}>Sign Up For Love</Text>
-            <View style = {{ marginHorizontal: 24}}>
-                <Text style = {{fontSize: 16, color: '#8e93a1'}}>NAME</Text>
-                <TextInput style = {styles.signupInput} value = {name} onChangeText = {setName} autoCapitalize="words" />
-            </View>
-            <View style = {{ marginHorizontal: 24}}>
-                <Text style = {{fontSize: 16, color: '#8e93a1'}}>EMAIL</Text>
-                <TextInput style = {styles.signupInput} value = {email} onChangeText = {setEmail} autoComplete="email" keyboardType="email-address" />
-            </View>
-            <View style = {{ marginHorizontal: 24}}>
-                <Text style = {{fontSize: 16, color: '#8e93a1'}}>PASSWORD</Text>
-                <TextInput style = {styles.signupInput} value = {password} onChangeText = {setPassword} secureTextEntry={true} autoComplete='password' />
-            </View>
-            <TouchableOpacity onPress={handleSubmit} style = {styles.buttonStyle}>
-                <Text style = {styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-        </View>    
+        <KeyboardAwareScrollView>
+            <View style = {styles.container}>
+                <Text style = {styles.signupText}>Sign Up For Love</Text>
+                <View style = {{ marginHorizontal: 24}}>
+                    <Text style = {{fontSize: 16, color: '#8e93a1'}}>NAME</Text>
+                    <TextInput style = {styles.signupInput} value = {name} onChangeText = {setName} autoCapitalize="words" />
+                </View>
+                <View style = {{ marginHorizontal: 24}}>
+                    <Text style = {{fontSize: 16, color: '#8e93a1'}}>EMAIL</Text>
+                    <TextInput style = {styles.signupInput} value = {email} onChangeText = {setEmail} autoComplete="email" keyboardType="email-address" />
+                </View>
+                <View style = {{ marginHorizontal: 24}}>
+                    <Text style = {{fontSize: 16, color: '#8e93a1'}}>PASSWORD</Text>
+                    <TextInput style = {styles.signupInput} value = {password} onChangeText = {setPassword} secureTextEntry={true} autoComplete='password' />
+                </View>
+                <TouchableOpacity onPress={handleSubmit} style = {styles.buttonStyle}>
+                    <Text style = {styles.buttonText}>Sign Up</Text>
+                </TouchableOpacity>
+            </View>  
+        </KeyboardAwareScrollView>  
     )
 }
 
