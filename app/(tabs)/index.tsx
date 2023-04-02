@@ -1,18 +1,21 @@
 import { StyleSheet } from 'react-native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { NavigationContainer } from '@react-navigation/native';
+import SignUp from '../../screens/SignUp';
+import SignIn from '../../screens/SignIn';
+import React from 'react';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
-import SignUp from '../../screens/SignUp'; 
+const Stack = createNativeStackNavigator();
 
-export default function TabOneScreen() {
+export default function SignUpScreen() {
   return (
-    <View style={styles.container}>
-      <SignUp />
-      <Text style={styles.title}>Tab One Updated2</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
-  );
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName = "SignIn">
+        <Stack.Screen name = "SignUp" component = {SignUp} />
+        <Stack.Screen name = "SignIn" component = {SignIn} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
 }
 
 const styles = StyleSheet.create({
