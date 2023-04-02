@@ -13,6 +13,7 @@ router.get("/", (req, res) => {
 
 router.post("/signup", signup);
 router.post("/signin", signin);
+router.post("/personalprofile", personalprofile);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 
