@@ -9,12 +9,12 @@ const Stack = createNativeStackNavigator();
 
 export default function SignUpScreen() {
   return (
-    <NavigationContainer>
+    
       <Stack.Navigator initialRouteName = "SignIn">
         <Stack.Screen name = "SignUp" component = {SignUp} />
         <Stack.Screen name = "SignIn" component = {SignIn} />
       </Stack.Navigator>
-    </NavigationContainer>
+  
   )
 }
 
