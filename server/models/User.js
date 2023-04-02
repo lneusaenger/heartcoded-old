@@ -44,8 +44,8 @@ const userSchema = new Schema(
     },
     image: {
       public_id: String,
-      url: String,
-      required: true,
+      url: String 
+      // had to remove string required because it was not supported.
     },
     resetCode: String,
   },

@@ -9,20 +9,53 @@ const SignUp = ({navigation}) => {
     const [password, setPassword] = useState('');
 
 
-    const handleSubmit = async() => {
+    // const handleSubmit = async() => {
+    //     console.log("Name: " + name);
+    //     if (name === '' || email === '' || password === '') {
+    //         alert('Please fill in all fields')
+    //     } 
+
+    //     const res = await axios.post('http://127.0.0.1:8000/api/signup', {
+    //          name: name,
+    //          email: email,
+    //          password: password
+    //     });
+    //     console.log(res);
+    //     alert('Sign up successful');
+    // }
+
+    const handleSubmit = async () => {
         console.log("Name: " + name);
         if (name === '' || email === '' || password === '') {
-            alert('Please fill in all fields')
-        } 
-
-        await axios.post('https://localhost:8001/api/signup', {
-             name: name,
-             email: email,
-             password: password
-         });
-        console.log("Success");
-        alert('Sign up successful');
-    }
+          alert('Please fill in all fields');
+        } else {
+          try {
+            const res = await axios.post('http://localhost:8000/api/signup', {
+              name: name,
+              email: email,
+              password: password,
+            });
+            console.log(res);
+            alert('Sign up successful');
+          } catch (error) {
+            console.error("Error during signup:", error);
+            if (error.response) {
+              // The request was made and the server responded with a status code outside the range of 2xx
+              console.error("Server response:", error.response.data, error.response.status, error.response.headers);
+              alert('Error during signup: ' + error.response.data.message);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.error("Request error:", error.request);
+              alert('Network error during signup. Please check your connection and try again.');
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.error("Axios config error:", error.message);
+              alert('Error during signup: ' + error.message);
+            }
+          }
+        }
+      };
+      
     
     return (
         <KeyboardAwareScrollView contentContainerStyle = {styles.container}>

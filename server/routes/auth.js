@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 
 router.post("/signup", signup);
 router.post("/signin", signin);
-router.post("/personalprofile", personalprofile);
+// router.post("/personalprofile", personalprofile); // cannot add yet since it's not defined.
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 

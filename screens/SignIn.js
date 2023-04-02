@@ -13,7 +13,7 @@ const SignIn = ({navigation}) => {
             alert('Please fill in all fields')
         } else {
             try {
-                await axios.post('https://localhost:8001/api/signin', {
+                await axios.post('http://localhost:8000/api/signin', {
                     email: email,
                     password: password
                 });
