@@ -1,28 +1,54 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"; // ensure keyboard doesn't cover input fields
 import axios from 'axios';
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { AuthContext } from '../context/auth';
 
 const SignUp = ({navigation}) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [state, setState] = useContext(AuthContext);
 
-
-    const handleSubmit = async() => {
+    const handleSubmit = async () => {
         console.log("Name: " + name);
         if (name === '' || email === '' || password === '') {
-            alert('Please fill in all fields')
-        } 
-
-        await axios.post('https://localhost:8001/api/signup', {
-             name: name,
-             email: email,
-             password: password
-         });
-        console.log("Success");
-        alert('Sign up successful');
-    }
+          alert('Please fill in all fields');
+        } else {
+          try {
+            const resp = await axios.post('http://localhost:8000/api/signup', {
+              name: name,
+              email: email,
+              password: password,
+            });
+            if(resp.data.error)
+                alert(resp.data.error)
+            else{
+                setState(resp.data);
+                await AsyncStorage.setItem("auth-rn", JSON.stringify(resp.data));
+                alert('Sign up successful');
+                navigation.navigate("PersonalProfile");
+            }
+          } catch (error) {
+            console.error("Error during signup:", error);
+            if (error.response) {
+              // The request was made and the server responded with a status code outside the range of 2xx
+              console.error("Server response:", error.response.data, error.response.status, error.response.headers);
+              alert('Error during signup: ' + error.response.data.message);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.error("Request error:", error.request);
+              alert('Network error during signup. Please check your connection and try again.');
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.error("Axios config error:", error.message);
+              alert('Error during signup: ' + error.message);
+            }
+          }
+        }
+      };
+      
     
     return (
         <KeyboardAwareScrollView contentContainerStyle = {styles.container}>
