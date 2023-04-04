@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"; // ensure keyboard doesn't cover input fields
 import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { AuthContext } from '../context/auth';
+import { AuthContext } from '../../context/auth';
 
 const SignUp = ({navigation}) => {
     const [name, setName] = useState('');
