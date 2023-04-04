@@ -6,6 +6,9 @@ import nanoid from "nanoid";
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_KEY);
+
+
+
 export const signup = async (req, res) => {
   console.log("Signup Hit");
   try {
@@ -57,6 +60,9 @@ export const signup = async (req, res) => {
     console.log(err);
   }
 };
+
+
+
 export const signin = async (req, res) => {
   // console.log(req.body);
   try {
@@ -90,6 +96,9 @@ export const signin = async (req, res) => {
     return res.status(400).send("Error. Try again.");
   }
 };
+
+
+
 export const forgotPassword = async (req, res) => {
   const { email } = req.body;
   // find user by email
@@ -120,6 +129,9 @@ export const forgotPassword = async (req, res) => {
     res.json({ ok: false });
   }
 };
+
+
+
 export const resetPassword = async (req, res) => {
   try {
     const { email, password, resetCode } = req.body;

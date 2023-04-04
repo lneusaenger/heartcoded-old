@@ -26,6 +26,14 @@ const userSchema = new Schema(
       min: 18,
       max: 120,
     },
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Other"],
+    },
+    targets: {
+      type: String,
+      enum: ["Men only", "Women only", "Everyone"],
+    },
     interests: {
       type: [String],
     },
