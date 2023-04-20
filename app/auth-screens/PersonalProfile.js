@@ -39,7 +39,7 @@ const PersonalProfile = () => {
 
   const preferenceOptions = [
     { label: 'Men only', value: 'Men only' },
-    { label: 'Females only', value: 'Females only' },
+    { label: 'Women only', value: 'Women only' },
     { label: 'Everyone', value: 'Everyone' },
   ];
 
