@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ScrollView } from 'react-native';
 
-export const PersonalProfile = () => {
+const PersonalProfile = () => {
   const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [interests, setInterests] = useState('');
-  const [publicBio, setPublicBio] = useState('');
-  const [deepSecrets, setDeepSecrets] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [interest1, setInterest1] = useState('');
+  const [interest2, setInterest2] = useState('');
+  const [interest3, setInterest3] = useState('');
+  const [bio, setBio] = useState('');
+  const [gender, setGender] = useState('');
+  const [preferences, setPreferences] = useState('');
   const [image, setImage] = useState(null);
+  const [privateBio, setPrivateBio] = useState('');
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -22,107 +29,154 @@ export const PersonalProfile = () => {
       setImage(result.uri);
     }
   };
+  
+  const genderOptions = [
+    { label: 'Male', value: 'Male' },
+    { label: 'Female', value: 'Female' },
+    { label: 'Other', value: 'Other' },
+    { label: 'Prefer not to say', value: 'Prefer not to say' },
+  ];
+
+  const preferenceOptions = [
+    { label: 'Men only', value: 'Men only' },
+    { label: 'Women only', value: 'Women only' },
+    { label: 'Everyone', value: 'Everyone' },
+  ];
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        source={{ uri: 'https://cdn.dribbble.com/users/64389/screenshots/1539461/media/1ab92a81a3936453092c29e0eccf7c09.gif' }}
-        style={{ width: '100%', height: 200 }}
-        resizeMode="cover"
-      />
-
-      <View style={styles.contentContainer}>
-        <Text style={styles.title}>Heartcoded {'<3'} </Text>
-        <Text style={styles.title}>Time to make your profile! </Text>
-
+    <KeyboardAwareScrollView>
+      <View>
+        <Text style={styles.signupText}>Time to set up your profile!</Text>
         <Button title="Upload Image" onPress={pickImage} />
-
-        <View style={{ height: 20 }} />
-
-        <Text style={styles.inputTitle}>Name:</Text>
-        <View style={styles.inputContainer}>
+        <View style={{ marginHorizontal: 24, marginBottom: 48 }}>
+          <Text style={{ fontSize: 16, color: '#8e93a1' }}>NAME</Text>
           <TextInput
-            style={styles.input}
-            onChangeText={setName}
+            style={styles.signupInput}
             value={name}
-            placeholder="Your Name"
+            onChangeText={(text) => setName(text)}
+            autoCapitalize="words"
           />
         </View>
-
-        <Text style={styles.inputTitle}>Age:</Text>
-
-        <TextInput
-          style={styles.input}
-          onChangeText={setAge}
-          value={age}
-          placeholder="Your Age"
-          keyboardType="numeric"
-        />
-
-        <Text style={styles.inputTitle}>Interests:</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setInterests}
-          value={interests}
-          placeholder="Your Interests"
-        />
-
-        <Text style={styles.inputTitle}>Public Bio:</Text>
-
-        <TextInput
-          style={styles.input}
-          onChangeText={setPublicBio}
-          value={publicBio}
-          placeholder="Your Public Bio"
-        />
-
-        <Text style={styles.inputTitle}>Deep Secrets:</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setDeepSecrets}
-          value={deepSecrets}
-          placeholder="Your Deep Secrets"
-        />
-
-        <View style={{ height: 20 }} />
-
-        <Button title="Save Changes" onPress={() => console.log("Changes saved!")} />
-
-        <View style={{ height: 20 }} />
+        <View style={{ marginHorizontal: 24, marginBottom: 48 }}>
+          <Text style={{ fontSize: 16, color: '#8e93a1' }}>BIRTHDAY</Text>
+          <TextInput
+            style={styles.signupInput}
+            value={birthday}
+            onChangeText={(text) => setBirthday(text)}
+          />
+        </View>
+        <View style={{ marginHorizontal: 24, marginBottom: 48 }}>
+          <Text style={{ fontSize: 16, color: '#8e93a1' }}>INTERESTS</Text>
+          <TextInput
+            style={styles.signupInput}
+            value={interest1}
+            onChangeText={(text) => setInterest1(text)}
+          />
+          <TextInput
+            style={styles.signupInput}
+            value={interest2}
+            onChangeText={(text) => setInterest2(text)}
+          />
+          <TextInput
+            style={styles.signupInput}
+            value={interest3}
+            onChangeText={(text) => setInterest3(text)}
+          />
+        </View>
+        <View style={{ marginHorizontal: 24, marginBottom: 48 }}>
+          <Text style={{ fontSize: 16, color: '#8e93a1' }}>ABOUT ME</Text>
+          <TextInput
+            style={styles.largeTextInput}
+            value={bio}
+            onChangeText={(text) => setBio(text)}
+            multiline={true}
+          />
+        </View>
+        <View style={{ marginHorizontal: 24, marginBottom: 48 }}>
+          <Text style={{ fontSize: 16, color: '#8e93a1' }}>GENDER</Text>
+          <Picker
+            selectedValue={gender}
+            onValueChange={(value) => setGender(value)}
+          >
+            <Picker.Item label="Select Gender" value="" />
+            {genderOptions.map((option) => (
+              <Picker.Item key={option.label} label={option.label} value={option.value} />
+            ))}
+          </Picker>
+        </View>
+        <View style={{ marginHorizontal: 24, marginBottom: 48 }}>
+          <Text style={{ fontSize: 16, color: '#8e93a1' }}>PREFERENCES</Text>
+          <Picker
+            selectedValue={preferences}
+            onValueChange={(value) => setPreferences(value)}
+          >
+            <Picker.Item label="Select Preferences" value="" />
+            {preferenceOptions.map((option) => (
+              <Picker.Item key={option.label} label={option.label} value={option.value} />
+            ))}
+          </Picker>
+        </View>
+        <View style={{ marginHorizontal: 24, marginBottom: 48 }}>
+          <Text style={{ fontSize: 16, color: '#8e93a1' }}>DEEP SECRETS (PRIVATE BIO)</Text>
+          <TextInput
+            style={styles.largeTextInput}
+            value={privateBio}
+            onChangeText={(text) => setPrivateBio(text)}
+            multiline={true}
+          />
+        </View>
       </View>
-    </ScrollView>
-  );
-}
+    </KeyboardAwareScrollView>  
+  )};  
 
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  contentContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputTitle: {
-      fontWeight: 'bold',
-      margin: 10,
+  const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        width: '100%'
     },
-    input: {
-      borderWidth: 1,
-      borderColor: 'gray',
-      padding: 8,
-      margin: 10,
-      width: '80%',
+    signupText: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: '#514e5a',
+        marginVertical: 16,
+        textAlign: 'center'
     },
-  });
+    signupInput: {
+        height: 40,
+        borderBottomColor: '#8e93a1',
+        borderBottomWidth: 0.5,
+        fontSize: 15,
+        color: '#514e5a',
+        marginBottom: 16
+    },
+    buttonStyle: {
+        backgroundColor: '#e9446a',
+        borderRadius: 10,
+        height: 52,
+        marginBottom: 16,
+        marginHorizontal: 24,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+    largeTextInput: {
+      fontSize: 15,
+      color: '#514e5a',
+      borderBottomColor: '#8e93a1',
+      borderBottomWidth: 0.5,
+      marginBottom: 16,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+      textAlignVertical: 'top'
+  },
+
+})
+
+
+  export default PersonalProfile

@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { AuthProvider } from '../context/auth';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import PersonalProfile from './auth-screens/PersonalProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,9 +15,10 @@ class App extends React.Component {
     return (
     <AuthProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName = "SignIn">
+        <Stack.Navigator initialRouteName = "SignUp">
           <Stack.Screen name = "SignUp" component = {SignUp} />
           <Stack.Screen name = "SignIn" component = {SignIn} />
+          <Stack.Screen name = "PersonalProfile" component = {PersonalProfile}/>
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
